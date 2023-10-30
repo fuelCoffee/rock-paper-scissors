@@ -16,7 +16,6 @@ function getComputerChoice() {
   } else {
     choice = "scissors";
   }
-  console.log(choice);
   return choice;
 }
 
@@ -43,6 +42,20 @@ function playRound(playerSelection, computerSelection) {
   }
 }
 
-const playerSelection = "rock";
-const computerSelection = getComputerChoice();
-console.log(playRound(playerSelection, computerSelection));
+function game() {
+  for (let i = 0; i < 5; i++) {
+    let playerSelection = prompt(`Guess?`);
+    const computerSelection = getComputerChoice();
+    console.log(playRound(playerSelection, computerSelection));
+  }
+
+  // if (playerScore > computerScore) {
+  //   return `You won the game!`;
+  // } else if (computerScore > playerScore) {
+  //   return `You lost the game!`;
+  // } else {
+  //   return `The game is a tie!`;
+  // }
+}
+
+game();
