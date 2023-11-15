@@ -4,17 +4,32 @@ const rock = document.querySelector(".rock");
 const paper = document.querySelector(".paper");
 const scissors = document.querySelector(".scissors");
 
+const div = document.createElement("div");
+const body = document.querySelector("body");
+
 rock.addEventListener("click", () => {
-  return console.log(playRound("rock", getComputerChoice()));
+  let message = playRound("rock", getComputerChoice());
+  div.textContent = message;
+  body.appendChild(div);
 });
 
 paper.addEventListener("click", () => {
-  return console.log(playRound("paper", getComputerChoice()));
+  let message = playRound("paper", getComputerChoice());
+  div.textContent = message;
+  body.appendChild(div);
 });
 
 scissors.addEventListener("click", () => {
-  return console.log(playRound("scissors", getComputerChoice()));
+  let message = playRound("scissors", getComputerChoice());
+  div.textContent = message;
+  body.appendChild(div);
 });
+
+// Display the running score, and announce a winner of the game once one player reaches 5 points.
+let playerScore = 0;
+let computerScore = 0;
+
+do {} while (playerScore < 5 && computerScore > 5);
 
 function getComputerChoice() {
   let randomNumber = Math.floor(Math.random() * 100) + 1;
@@ -32,24 +47,31 @@ function getComputerChoice() {
 function playRound(playerSelection, computerSelection) {
   playerSelection = playerSelection.toLowerCase();
   //Order is rock, paper, scissors (alphabetically)
-  let message;
   if (playerSelection === computerSelection) {
-    return (message = `It's a tie!`);
+    return `It's a tie!`;
   } else if (
     (playerSelection === "rock" && computerSelection === "scissors") ||
     (playerSelection === "scissors" && computerSelection === "paper") ||
     (playerSelection === "paper" && computerSelection === "rock")
   ) {
-    return (message = `You won! ${playerSelection} beats ${computerSelection}`);
+    return `You won! Your ${capitalizeFirstLetter(
+      playerSelection
+    )} beats the computer's ${capitalizeFirstLetter(computerSelection)}`;
   } else if (
     (computerSelection === "rock" && playerSelection === "scissors") ||
     (computerSelection === "scissors" && playerSelection === "paper") ||
     (computerSelection === "paper" && playerSelection === "rock")
   ) {
-    return (message = `You lose! ${computerSelection} beats ${playerSelection}`);
+    return `You lose! The computer's ${capitalizeFirstLetter(
+      computerSelection
+    )} beats your ${capitalizeFirstLetter(playerSelection)}`;
   } else {
     return `Please enter rock, paper or scissors`;
   }
+}
+
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
 /*
