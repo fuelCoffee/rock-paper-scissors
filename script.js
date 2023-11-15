@@ -1,11 +1,21 @@
 "use strict";
 
-// input rock paper scissors
+const rock = document.querySelector(".rock");
+const paper = document.querySelector(".paper");
+const scissors = document.querySelector(".scissors");
 
-// compare user input to computer input
-// display message indicating success, or Tie
+rock.addEventListener("click", () => {
+  return console.log(playRound("rock", getComputerChoice()));
+});
 
-// randomly assign one to a computer input
+paper.addEventListener("click", () => {
+  return console.log(playRound("paper", getComputerChoice()));
+});
+
+scissors.addEventListener("click", () => {
+  return console.log(playRound("scissors", getComputerChoice()));
+});
+
 function getComputerChoice() {
   let randomNumber = Math.floor(Math.random() * 100) + 1;
   let choice;
@@ -42,6 +52,10 @@ function playRound(playerSelection, computerSelection) {
   }
 }
 
+/*
+
+Old functionality: play 5 rounds w/o a UI
+
 function game() {
   for (let i = 0; i < 5; i++) {
     let playerSelection = prompt(`Guess?`);
@@ -59,3 +73,4 @@ function game() {
 }
 
 game();
+*/
