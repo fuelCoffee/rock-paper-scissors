@@ -30,28 +30,49 @@ function playRound(playerSelection, computerSelection) {
   playerSelection = playerSelection.toLowerCase();
   //Order is rock, paper, scissors (alphabetically)
   if (playerSelection === computerSelection) {
-    return `It's a tie!`;
+    result = `It's a tie!
+
+    Player Score: ${playerScore} 
+    Computer Score: ${computerScore}`;
   } else if (
     (playerSelection === "rock" && computerSelection === "scissors") ||
     (playerSelection === "scissors" && computerSelection === "paper") ||
     (playerSelection === "paper" && computerSelection === "rock")
   ) {
     playerScore += 1;
-    return `You won! Your ${capitalizeFirstLetter(
+
+    result = `You won! Your ${capitalizeFirstLetter(
       playerSelection
-    )} beats the computer's ${capitalizeFirstLetter(computerSelection)}`;
+    )} beats the computer's ${capitalizeFirstLetter(computerSelection)}
+    
+    Player Score: ${playerScore} 
+    Computer Score: ${computerScore}`;
+
+    if (playerScore == 5) {
+      result = `You won the game! Refresh page to play again`;
+      disableButtons();
+    }
   } else if (
     (computerSelection === "rock" && playerSelection === "scissors") ||
     (computerSelection === "scissors" && playerSelection === "paper") ||
     (computerSelection === "paper" && playerSelection === "rock")
   ) {
     computerScore += 1;
-    return `You lose! The computer's ${capitalizeFirstLetter(
+
+    result = `You lose! The computer's ${capitalizeFirstLetter(
       computerSelection
-    )} beats your ${capitalizeFirstLetter(playerSelection)}`;
-  } else {
-    return `Please enter rock, paper or scissors`;
+    )} beats your ${capitalizeFirstLetter(playerSelection)}
+
+    Player Score: ${playerScore} 
+    Computer Score: ${computerScore}`;
+
+    if (computerScore == 5) {
+      result = `The computer won the game! Refresh page to play again.`;
+      disableButtons();
+    }
   }
+  document.querySelector(".result").innerHTML = result;
+  return;
 }
 
 function capitalizeFirstLetter(string) {
@@ -60,51 +81,18 @@ function capitalizeFirstLetter(string) {
 
 rock.addEventListener("click", () => {
   let message = playRound("rock", getComputerChoice());
-  div.textContent = message;
-  body.appendChild(div);
 });
 
 paper.addEventListener("click", () => {
-  let message = playRound("paper", getComputerChoice());
-  div.textContent = message;
-  body.appendChild(div);
+  playRound("paper", getComputerChoice());
 });
 
 scissors.addEventListener("click", () => {
   let message = playRound("scissors", getComputerChoice());
-  div.textContent = message;
-  body.appendChild(div);
 });
-
-//Hold running score content
-const score = document.querySelector(".score");
-score.textContent = `Player Score: ${playerScore} Computer Score: ${computerScore}`;
 
 function disableButtons() {
   buttons.forEach((elem) => {
     elem.disabled = true;
   });
 }
-
-/*
-
-Old functionality: play 5 rounds w/o a UI
-
-function game() {
-  for (let i = 0; i < 5; i++) {
-    let playerSelection = prompt(`Guess?`);
-    const computerSelection = getComputerChoice();
-    console.log(playRound(playerSelection, computerSelection));
-  }
-
-  // if (playerScore > computerScore) {
-  //   return `You won the game!`;
-  // } else if (computerScore > playerScore) {
-  //   return `You lost the game!`;
-  // } else {
-  //   return `The game is a tie!`;
-  // }
-}
-
-game();
-*/
