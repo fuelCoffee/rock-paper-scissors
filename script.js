@@ -1,35 +1,17 @@
-"use strict";
+"Use Strict";
 
 const rock = document.querySelector(".rock");
 const paper = document.querySelector(".paper");
 const scissors = document.querySelector(".scissors");
+const buttons = document.querySelectorAll("button");
 
 const div = document.createElement("div");
 const body = document.querySelector("body");
 
-rock.addEventListener("click", () => {
-  let message = playRound("rock", getComputerChoice());
-  div.textContent = message;
-  body.appendChild(div);
-});
-
-paper.addEventListener("click", () => {
-  let message = playRound("paper", getComputerChoice());
-  div.textContent = message;
-  body.appendChild(div);
-});
-
-scissors.addEventListener("click", () => {
-  let message = playRound("scissors", getComputerChoice());
-  div.textContent = message;
-  body.appendChild(div);
-});
-
 // Display the running score, and announce a winner of the game once one player reaches 5 points.
 let playerScore = 0;
 let computerScore = 0;
-
-do {} while (playerScore < 5 && computerScore > 5);
+let result = "";
 
 function getComputerChoice() {
   let randomNumber = Math.floor(Math.random() * 100) + 1;
@@ -54,6 +36,7 @@ function playRound(playerSelection, computerSelection) {
     (playerSelection === "scissors" && computerSelection === "paper") ||
     (playerSelection === "paper" && computerSelection === "rock")
   ) {
+    playerScore += 1;
     return `You won! Your ${capitalizeFirstLetter(
       playerSelection
     )} beats the computer's ${capitalizeFirstLetter(computerSelection)}`;
@@ -62,6 +45,7 @@ function playRound(playerSelection, computerSelection) {
     (computerSelection === "scissors" && playerSelection === "paper") ||
     (computerSelection === "paper" && playerSelection === "rock")
   ) {
+    computerScore += 1;
     return `You lose! The computer's ${capitalizeFirstLetter(
       computerSelection
     )} beats your ${capitalizeFirstLetter(playerSelection)}`;
@@ -72,6 +56,34 @@ function playRound(playerSelection, computerSelection) {
 
 function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+rock.addEventListener("click", () => {
+  let message = playRound("rock", getComputerChoice());
+  div.textContent = message;
+  body.appendChild(div);
+});
+
+paper.addEventListener("click", () => {
+  let message = playRound("paper", getComputerChoice());
+  div.textContent = message;
+  body.appendChild(div);
+});
+
+scissors.addEventListener("click", () => {
+  let message = playRound("scissors", getComputerChoice());
+  div.textContent = message;
+  body.appendChild(div);
+});
+
+//Hold running score content
+const score = document.querySelector(".score");
+score.textContent = `Player Score: ${playerScore} Computer Score: ${computerScore}`;
+
+function disableButtons() {
+  buttons.forEach((elem) => {
+    elem.disabled = true;
+  });
 }
 
 /*
